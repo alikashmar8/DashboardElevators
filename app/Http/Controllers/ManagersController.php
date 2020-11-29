@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Manager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ManagersController extends Controller
 {
@@ -49,7 +50,6 @@ class ManagersController extends Controller
         $manager->phoneNumber = $request->phoneNumber;
 
         if (isset($request->image)) {
-
             // Get filename with the extension
             $filenameWithExt = $request->image->getClientOriginalName();
             // Get just filename
@@ -90,7 +90,8 @@ class ManagersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $manager = Manager::findOrFail($id);
+        return view('managers.edit')->with('manager', $manager);
     }
 
     /**
@@ -102,7 +103,38 @@ class ManagersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required | max:250',
+            'address' => 'required | max:250',
+            'phoneNumber' => 'required | max:150',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $manager = Manager::findOrFail($id);
+        $manager->name = $request->name;
+        $manager->address = $request->address;
+        $manager->phoneNumber = $request->phoneNumber;
+
+
+        if (isset($request->image)) {
+            if ($request->image != $manager->profilePicture) {
+                // Get filename with the extension
+                $filenameWithExt = $request->image->getClientOriginalName();
+                // Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $request->image->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Upload Image
+                $path = $request->image->storeAs('public/profile_images', $fileNameToStore);
+                $manager->profilePicture = $fileNameToStore;
+            }
+        } else {
+            $manager->profilePicture = "noImage.jpg";
+        }
+        $manager->save();
+        return response('success');
     }
 
     /**
@@ -113,6 +145,11 @@ class ManagersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $manager = Manager::findOrFail($id);
+        if ($manager->profilePicture != 'noImage.jpg') {
+            Storage::delete('public/profile_images/' . $manager->profilePicture);
+        }
+        $manager->delete();
+        return response('success');
     }
 }

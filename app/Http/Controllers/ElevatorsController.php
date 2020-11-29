@@ -71,7 +71,9 @@ class ElevatorsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $elevator = Elevator::findOrFail($id);
+        $buildings = Building::all();
+        return view('elevators.edit', compact('elevator', 'buildings'));
     }
 
     /**
@@ -83,7 +85,18 @@ class ElevatorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required | max: 250',
+            'index' => 'required | min: 0',
+            'building_id' => 'required',
+        ]);
+
+        $elevator = Elevator::findOrFail($id);
+        $elevator->name = $request->name;
+        $elevator->index = $request->index;
+        $elevator->building_id = $request->building_id;
+        $elevator->save();
+        return response('success');
     }
 
     /**
@@ -94,6 +107,8 @@ class ElevatorsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $elevator = Elevator::findOrFail($id);
+        $elevator->delete();
+        return 'success';
     }
 }

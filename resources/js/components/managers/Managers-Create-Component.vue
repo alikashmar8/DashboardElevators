@@ -4,10 +4,10 @@
             Add New Manager:
         </div>
         <div class="alert alert-danger" role="alert" v-show="hasError">
-            All fields are required!
+            Please check all values or try again later!
         </div>
         <div class="alert alert-success" role="alert" v-show="success">
-            Building created successfully!
+            Manager created successfully!
         </div>
         <form action="/managers" enctype="multipart/form-data" method="post">
             <div class="form-group">
@@ -29,8 +29,10 @@
             </div>
 
             <div class="form-group">
-                <label for="profilePicture">Profile Picture:</label>
-                <input type="file" @change="imageSelected" class="custom-file-input" id="profilePicture"
+                <label for="profilePicture">Profile Picture:
+                    <div class="text-danger">(optional)</div>
+                </label>
+                <input type="file" @change="imageSelected" class="form-control" id="profilePicture"
                        name="profilePicture">
 
             </div>
@@ -64,7 +66,7 @@
                 data.append('name', this.newManager.name);
                 data.append('address', this.newManager.address);
                 data.append('phoneNumber', this.newManager.phoneNumber);
-                data.append('image', this.newManager.image);
+                if (this.newManager.image != null) data.append('image', this.newManager.image);
                 var input = this.newManager;
                 var _this = this;
                 this.hasError = false;
@@ -75,9 +77,11 @@
                 } else {
                     this.hasError = false;
                     axios.post('/managers', data).then(function (response) {
-                        console.log(response.data);
-                        _this.success = true;
-                        _this.newManager = {'name': '', 'address': '', 'phoneNumber': ''}
+                        if (response.status === 200) {
+                            console.log('success');
+                            _this.success = true;
+                            _this.newManager = {'name': '', 'address': '', 'phoneNumber': ''}
+                        }
                     }).catch(error => {
                         console.log("Error: " + error);
                         this.success = false;

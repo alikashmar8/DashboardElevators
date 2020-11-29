@@ -4,7 +4,7 @@
             Add New Building:
         </div>
         <div class="alert alert-danger" role="alert" v-show="hasError">
-            All fields are required!
+            Please Check all fields or try again later!
         </div>
         <div class="alert alert-success" role="alert" v-show="success">
             Building created successfully!
@@ -55,8 +55,7 @@
                 var _this = this;
                 this.hasError = false;
                 this.success = false;
-                if (input['name'] == ''
-                    || input['address'] == '' || input['floors'] <= 0 || input['contactNumber'] == ''
+                if (input['name'] == '' || input['address'] == '' || input['floors'] <= 0 || input['contactNumber'] == ''
                 ) {
                     this.hasError = true;
                     this.success = false;
@@ -78,7 +77,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

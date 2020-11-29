@@ -59,12 +59,11 @@
                     this.success = false;
                 } else {
                     axios.post('/elevators', input).then(function (response) {
-                        console.log(response.data);
-                        // if(response.data == 'success'){
-                        // }
-                        _this.success = true;
-                        _this.newElevator = {'name': '', 'index': 0, 'building_id': 0}
-
+                        if (response.status === 200) {
+                            console.log('success');
+                            _this.success = true;
+                            _this.newElevator = {'name': '', 'index': 0, 'building_id': 0}
+                        }
                     }).catch(error => {
                         console.log("Error: " + error);
                         this.success = false;

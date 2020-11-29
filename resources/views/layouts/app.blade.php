@@ -19,12 +19,13 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="overflow-x: hidden; background-size: cover; background-attachment: fixed"
+      background="https://images.unsplash.com/photo-1543593450-4faaab9a0f6e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80">
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                {{ config('app.name', 'Dashboard Elevators') }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -32,10 +33,19 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-
+                    <li class="nav-item">
+                        <a href="/buildings" class="nav-link">Buildings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/elevators" class="nav-link">Elevators</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/managers" class="nav-link">Managers</a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -79,7 +89,7 @@
     </nav>
 
     <main class="py-4">
-        <div class="container">
+        <div style="background-color: #ecf2f4;" class="container rounded p-3">
             @yield('content')
         </div>
     </main>

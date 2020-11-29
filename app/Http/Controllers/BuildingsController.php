@@ -74,7 +74,8 @@ class BuildingsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $building = Building::findOrFail($id);
+        return view('buildings.edit', compact('building'));
     }
 
     /**
@@ -86,7 +87,20 @@ class BuildingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required | max: 250',
+            'floors' => 'required | min: 1',
+            'address' => 'required | max: 250',
+            'contactNumber' => 'required | max: 150',
+        ]);
+
+        $building = Building::findOrFail($id);
+        $building->name = $request->name;
+        $building->floors = $request->floors;
+        $building->address = $request->address;
+        $building->contactNumber = $request->contactNumber;
+        $building->save();
+        return response('success');
     }
 
     /**
@@ -97,6 +111,12 @@ class BuildingsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $building = Building::findOrFail($id);
+        $elevators = $building->Elevators;
+        foreach ($elevators as $elevator) {
+            $elevator->delete();
+        }
+        $building->delete();
+        return response('success');
     }
 }
