@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Building;
+use App\Models\Elevator;
 use Illuminate\Http\Request;
 
 class ElevatorsController extends Controller
@@ -13,7 +15,8 @@ class ElevatorsController extends Controller
      */
     public function index()
     {
-        //
+        $elevators = Elevator::with('Building')->get();
+        return view('elevators.index', compact('elevators'));
     }
 
     /**
@@ -23,7 +26,8 @@ class ElevatorsController extends Controller
      */
     public function create()
     {
-        //
+        $buildings = Building::all();
+        return view('elevators.create', compact('buildings'));
     }
 
     /**
@@ -34,7 +38,18 @@ class ElevatorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'index' => 'required',
+            'building_id' => 'required',
+        ]);
+
+        $elevator = new Elevator;
+        $elevator->name = $request->name;
+        $elevator->index = $request->index;
+        $elevator->building_id = $request->building_id;
+        $elevator->save();
+        return response('success');
     }
 
     /**

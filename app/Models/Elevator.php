@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Elevator extends Model
 {
     use HasFactory;
+
+    public function Building()
+    {
+        return $this->belongsTo('App\Models\Building');
+    }
 }

@@ -18,4 +18,6 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::resource('buildings', '\App\Http\Controllers\BuildingsController');
+Route::resource('elevators', '\App\Http\Controllers\ElevatorsController');
+Route::resource('managers', '\App\Http\Controllers\ManagersController');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

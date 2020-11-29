@@ -9,7 +9,7 @@ class Manager extends Model
 {
     use HasFactory;
 
-    public function Building()
+    public function Buildings()
     {
         return $this->belongsToMany('App\Models\Building', 'manager_building_relations');
     }
