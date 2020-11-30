@@ -60,7 +60,8 @@ class ElevatorsController extends Controller
      */
     public function show($id)
     {
-        //
+        $elevator = Elevator::with('Building')->findOrFail($id);
+        return view('elevators.show', compact('elevator'));
     }
 
     /**

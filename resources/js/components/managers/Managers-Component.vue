@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="row mt-3 mb-4">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h2>Managers Available:</h2>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a href="/managers/create" class="btn btn-info">Create New Manager</a>
             </div>
         </div>
@@ -18,7 +18,8 @@
                              style="max-width: 100%;max-height: 100%;">
                     </div>
                     <div class="col-md-6">
-                        <h4><span class="font-weight-bold mr-3">Manager Name:</span> {{manager.name}}</h4>
+                        <h4><span class="font-weight-bold mr-3">Manager Name:</span> <a
+                            :href="showModelUrl(manager.id)">{{manager.name}}</a></h4>
                         <div v-if="manager.buildings.length > 0">
                             <h6 class="font-weight-bold">Buildings he manages:</h6>
                             <ul>
@@ -82,6 +83,9 @@
         methods: {
             getProfileImage(url) {
                 return 'storage/profile_images/' + url;
+            },
+            showModelUrl(id) {
+                return "/managers/" + id;
             },
             changeId(param) {
                 this.id = param;

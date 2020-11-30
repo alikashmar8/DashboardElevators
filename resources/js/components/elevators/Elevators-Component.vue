@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="row mt-3 mb-4">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h2>Elevators Available:</h2>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a href="/elevators/create" class="btn btn-info">Create New Elevator</a>
             </div>
         </div>
@@ -15,7 +15,8 @@
                 <div class="row">
                     <li></li>
                     <div class="col-md-8">
-                        <h4><span class="font-weight-bold mr-3">Elevator Name:</span> {{elevator.name}}</h4>
+                        <h4><span class="font-weight-bold mr-3">Elevator Name:</span> <a
+                            :href="showModelUrl(elevator.id)">{{elevator.name}}</a></h4>
                         <div v-if="elevator.building != null">
                             <h6 class="font-weight-bold">Is at building:</h6>
                             <p>{{elevator.building.name}}</p>
@@ -74,6 +75,9 @@
         methods: {
             getEditUrl(id) {
                 return "/elevators/" + id + "/edit";
+            },
+            showModelUrl(id) {
+                return "/elevators/" + id;
             },
             changeId(param) {
                 this.id = param;

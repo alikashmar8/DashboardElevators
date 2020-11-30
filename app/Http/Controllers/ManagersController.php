@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Building;
 use App\Models\Manager;
+use App\Models\ManagerBuildingRelation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use function Sodium\add;
 
 class ManagersController extends Controller
 {
@@ -79,7 +82,8 @@ class ManagersController extends Controller
      */
     public function show($id)
     {
-        //
+        $manager = Manager::with('buildings')->findOrFail($id);
+        return view('managers.show', compact('manager'));
     }
 
     /**
@@ -151,5 +155,35 @@ class ManagersController extends Controller
         }
         $manager->delete();
         return response('success');
+    }
+
+    public function managerRelations($id)
+    {
+        $manager = Manager::with('buildings')->findOrFail($id);
+        $selectedBuildings = $manager->buildings;
+        $buildings_id = [];
+        foreach ($selectedBuildings as $i => $b) {
+            $buildings_id[$i] = $b->id;
+        }
+        $buildings = Building::all();
+        return view('managers.managerRelations', compact('manager', 'buildings', 'buildings_id'));
+    }
+
+    public function saveRelations(Request $request, $id)
+    {
+
+        $relations = ManagerBuildingRelation::where('manager_id', '=', $id)->get();
+
+        foreach ($relations as $relation) {
+            $relation->delete();
+        }
+
+        for ($i = 0; $i < count($request->body); $i++) {
+            $r = new ManagerBuildingRelation;
+            $r->manager_id = $id;
+            $r->building_id = $request->body[$i];
+            $r->save();
+        }
+        return $i;
     }
 }

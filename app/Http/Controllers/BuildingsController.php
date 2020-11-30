@@ -63,7 +63,8 @@ class BuildingsController extends Controller
      */
     public function show($id)
     {
-        //
+        $building = Building::with(['Elevators', 'Managers'])->findOrFail($id);
+        return view('buildings.show', compact('building'));
     }
 
     /**
