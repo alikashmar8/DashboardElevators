@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="row mt-3 mb-4">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <h2>Managers Available:</h2>
             </div>
-            <div class="col-md-4">
-                <a href="/managers/create" class="btn btn-info">Create New Manager</a>
+            <div class="col-md-3">
+                <a href="/managers/create" class="btn btn-primary">Create New Manager</a>
             </div>
         </div>
 
@@ -31,7 +31,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <a :href="getEditUrl(manager.id)" class="btn btn-secondary mx-3">Edit</a>
+                        <a :href="getEditUrl(manager.id)" class="btn btn-secondary">Edit</a>
+                        <a :href="getRelationsUrl(manager.id)" class="btn btn-info mx-3">Buildings</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
                                 @click.prevent="changeId(manager.id)">Delete
                         </button>
@@ -92,6 +93,9 @@
             },
             getEditUrl(id) {
                 return "/managers/" + id + "/edit";
+            },
+            getRelationsUrl(id) {
+                return "/managers/managerRelations/" + id;
             },
             deleteManager() {
                 axios.delete('/managers/' + this.id).then(function (response) {

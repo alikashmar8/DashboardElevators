@@ -15,12 +15,13 @@ class ElevatorsSeeder extends Seeder
      */
     public function run()
     {
+        //create 40 random elevators
         $faker = Faker::create();
         for ($i = 1; $i < 40; $i++) {
             DB::table('elevators')->insert([
                 'name' => $faker->sentence(2),
                 'index' => rand(1, 30),
-                'building_id' => rand(1, 20),
+                'building_id' => rand(1, 19),
             ]);
         }
     }

@@ -18,6 +18,9 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::resource('buildings', '\App\Http\Controllers\BuildingsController');
+Route::get('/buildings/buildingRelations/{id}', '\App\Http\Controllers\BuildingsController@buildingRelations');
+Route::post('/buildings/saveRelations/{id}', '\App\Http\Controllers\BuildingsController@saveRelations');
+
 Route::resource('elevators', '\App\Http\Controllers\ElevatorsController');
 Route::get('/managers/managerRelations/{id}', '\App\Http\Controllers\ManagersController@managerRelations');
 Route::post('/managers/saveRelations/{id}', '\App\Http\Controllers\ManagersController@saveRelations');

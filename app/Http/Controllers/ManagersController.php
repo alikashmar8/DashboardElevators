@@ -184,6 +184,6 @@ class ManagersController extends Controller
             $r->building_id = $request->body[$i];
             $r->save();
         }
-        return $i;
+        return response('success');
     }
 }

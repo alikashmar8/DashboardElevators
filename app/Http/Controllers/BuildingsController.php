@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Building;
+use App\Models\Manager;
+use App\Models\ManagerBuildingRelation;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -120,4 +122,35 @@ class BuildingsController extends Controller
         $building->delete();
         return response('success');
     }
+
+    public function buildingRelations($id)
+    {
+        $building = Building::with('managers')->findOrFail($id);
+        $selectedManagers = $building->managers;
+        $managers_id = [];
+        foreach ($selectedManagers as $i => $b) {
+            $managers_id[$i] = $b->id;
+        }
+        $managers = Manager::all();
+        return view('buildings.buildingRelations', compact('building', 'managers', 'managers_id'));
+    }
+
+    public function saveRelations(Request $request, $id)
+    {
+
+        $relations = ManagerBuildingRelation::where('building_id', '=', $id)->get();
+
+        foreach ($relations as $relation) {
+            $relation->delete();
+        }
+
+        for ($i = 0; $i < count($request->body); $i++) {
+            $r = new ManagerBuildingRelation;
+            $r->manager_id = $request->body[$i];
+            $r->building_id = $id;
+            $r->save();
+        }
+        return response('success');
+    }
+
 }

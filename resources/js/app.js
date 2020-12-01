@@ -18,6 +18,7 @@ Vue.component('buildings-component', require('./components/buildings/Buildings-C
 Vue.component('buildings-create-component', require('./components/buildings/Buildings-Create-Component.vue').default);
 Vue.component('buildings-edit-component', require('./components/buildings/Buildings-Edit-Component.vue').default);
 Vue.component('buildings-show-component', require('./components/buildings/Buildings-Show-Component.vue').default);
+Vue.component('buildings-relations-component', require('./components/buildings/Building-Relations-Component.vue').default);
 
 //Elevators Components
 Vue.component('elevators-component', require('./components/elevators/Elevators-Component.vue').default);

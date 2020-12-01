@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="row mt-3 mb-4">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <h2>Buildings Available:</h2>
             </div>
-            <div class="col-md-4">
-                <a href="/buildings/create" class="btn btn-info">Create New Building</a>
+            <div class="col-md-3">
+                <a href="/buildings/create" class="btn btn-primary">Create New Building</a>
             </div>
         </div>
         <ol>
@@ -35,7 +35,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <a :href="getEditUrl(building.id)" class="btn btn-secondary mx-3">Edit</a>
+                        <a :href="getEditUrl(building.id)" class="btn btn-secondary">Edit</a>
+                        <a :href="getRelationsUrl(building.id)" class="btn btn-info mx-3">Managers</a>
                         <button class="btn btn-danger" data-target="#deleteModal" data-toggle="modal"
                                 @click.prevent="changeId(building.id)">Delete
                         </button>
@@ -91,6 +92,9 @@
         methods: {
             getEditUrl(id) {
                 return "/buildings/" + id + "/edit";
+            },
+            getRelationsUrl(id) {
+                return "/buildings/buildingRelations/" + id;
             },
             showModelUrl(id) {
                 return "/buildings/" + id;

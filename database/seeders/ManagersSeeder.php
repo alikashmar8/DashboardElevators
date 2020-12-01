@@ -15,6 +15,8 @@ class ManagersSeeder extends Seeder
      */
     public function run()
     {
+
+        //create 10 random managers
         $faker = Faker::create();
         for ($i = 1; $i < 10; $i++) {
             DB::table('managers')->insert([

@@ -87,7 +87,7 @@
                 data.append('name', this.newManager.name);
                 data.append('address', this.newManager.address);
                 data.append('phoneNumber', this.newManager.phoneNumber);
-                if (this.newManager.image != null && this.newManager.image != "noImage.jpg") data.append('image', this.newManager.image);
+                if (this.newManager.image != null && this.newManager.image != "noImage.jpg" && this.newManager.image != this.manager.profilePicture) data.append('image', this.newManager.image);
                 var input = this.newManager;
                 var _this = this;
                 this.hasError = false;

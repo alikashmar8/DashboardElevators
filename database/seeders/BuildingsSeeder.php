@@ -18,6 +18,7 @@ class BuildingsSeeder extends Seeder
      */
     public function run()
     {
+        //create random 20 buildings
         $faker = Faker::create();
         for ($i = 0; $i < 20; $i++) {
             DB::table('buildings')->insert([

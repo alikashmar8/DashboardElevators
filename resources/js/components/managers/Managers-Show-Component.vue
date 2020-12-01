@@ -12,7 +12,7 @@
                 <div v-if="manager.buildings.length > 0">
                     <h4 class="font-weight-bold mt-4 ml-4">Manager Building:</h4>
                     <ul>
-                        <li v-for="building in manager.buildings">{{manager.name}}</li>
+                        <li v-for="building in manager.buildings">{{building.name}}</li>
                     </ul>
                 </div>
                 <div v-else>
